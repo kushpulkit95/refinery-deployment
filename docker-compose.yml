@@ -1,0 +1,28 @@
+services:
+
+  receiver:
+    image: receiver-server:latest
+    container_name: receiver
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    networks:
+      - refinery-network
+
+  simulator:
+    image: data-refinery-simulator:latest
+    container_name: simulator
+
+    depends_on:
+      - receiver
+
+    environment:
+      CDRHOST: receiver
+      NATHOST: receiver
+
+    networks:
+      - refinery-network
+
+networks:
+  refinery-network:
+    driver: bridge
