@@ -1,16 +1,18 @@
 services:
 
   receiver:
-    image: receiver-server:latest
+    image: pkistrying/receiver-server:latest
     container_name: receiver
+
     ports:
       - "5000:5000"
-      - "5001:5001"
+      - "5001:5001/udp"
+
     networks:
       - refinery-network
 
   simulator:
-    image: data-refinery-simulator:latest
+    image: pkistrying/data-refinery-simulator:latest
     container_name: simulator
 
     depends_on:
