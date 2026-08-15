@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Release.Name }}-receiver
+  namespace: {{ .Release.Namespace }}
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: receiver
+
+  template:
+    metadata:
+      labels:
+        app: receiver
+
+    spec:
+      containers:
+        - name: receiver
+
+          image: "{{ .Values.receiver.image.repository }}:{{ .Values.receiver.image.tag }}"
+
+          imagePullPolicy: Always
+
+          ports:
+            - name: tcp-cdr
+              containerPort: {{ .Values.receiver.ports.tcp }}
+              protocol: TCP
+
+            - name: udp-nat
+              containerPort: {{ .Values.receiver.ports.udp }}
+              protocol: UDP
+
+          resources:
+            {{- toYaml .Values.receiver.resources | nindent 12 }}

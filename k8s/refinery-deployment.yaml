@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: receiver
+  namespace: refinery
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: receiver
+
+  template:
+
+    metadata:
+      labels:
+        app: receiver
+
+    spec:
+      containers:
+        - name: receiver
+          image: pkistrying/receiver-server:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 5000
+              protocol: TCP
+            - containerPort: 5001
+              protocol: UDP
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

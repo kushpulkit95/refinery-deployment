@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ .Release.Name }}-receiver-service
+  namespace: {{ .Release.Namespace }}
+
+spec:
+  selector:
+    app: receiver
+
+  ports:
+    - name: tcp-cdr
+      protocol: TCP
+      port: {{ .Values.receiver.ports.tcp }}
+      targetPort: {{ .Values.receiver.ports.tcp }}
+
+    - name: udp-nat
+      protocol: UDP
+      port: {{ .Values.receiver.ports.udp }}
+      targetPort: {{ .Values.receiver.ports.udp }}
+
+  type: ClusterIP

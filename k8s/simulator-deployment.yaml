@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: simulator
+  namespace: refinery
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: simulator
+
+  template:
+    metadata:
+      labels:
+        app: simulator
+
+    spec:
+      containers:
+        - name: simulator
+
+          image: pkistrying/data-refinery-simulator:latest
+
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: simulator-config
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

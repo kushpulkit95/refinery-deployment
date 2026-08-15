@@ -1,0 +1,39 @@
+receiver:
+  image:
+    repository: pkistrying/receiver-server
+    tag: latest
+
+  ports:
+    tcp: 5000
+    udp: 5001
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+
+simulator:
+  image:
+    repository: pkistrying/data-refinery-simulator
+    tag: latest
+
+  ports:
+    cdr: 5000
+    nat: 5001
+
+  recordCount: 10
+  datatype: "cdr,nat"
+  timestamp: "2026-07-13"
+  timeperiod: 1000
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
